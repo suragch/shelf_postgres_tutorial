@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-import 'database/postgres.dart';
+import 'database.dart';
 import 'service_locator.dart';
 
 Future<Response> createHandler(Request request) async {
