@@ -5,7 +5,7 @@ In order for this to work, you need to have a the following things already set u
 - A Postgres server running with a correctly configured database.
 - The Shelf server running on localhost port 8080.
 
-Follow the directions in the tutorial for help.
+Follow the directions in the [tutorial](https://suragch.medium.com/using-postgresql-on-a-dart-server-ad0e40b11947?sk=82a05bd43621e8b2484afc63816036c0) for help.
 
 ## Updating the platform folders
 

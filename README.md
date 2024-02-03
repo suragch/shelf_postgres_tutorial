@@ -1,6 +1,6 @@
 # Shelf Postgres tutorial
 
-This is the source code for the PostgreSQL and Shelf server tutorial on Medium. The article describes the setup directions, but in summary, you need to have the following installed:
+This is the source code for the [PostgreSQL and Shelf server tutorial on Medium](https://suragch.medium.com/using-postgresql-on-a-dart-server-ad0e40b11947?sk=82a05bd43621e8b2484afc63816036c0). The article describes the setup directions, but in summary, you need to have the following installed:
 
 - PostgreSQL server installed and running on port 5432.
 - Dart and Flutter installed.
