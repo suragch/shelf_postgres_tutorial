@@ -19,37 +19,29 @@ class Database {
   Future<Map<String, dynamic>> create(String userId, int score) async {
     final query =
         Sql.named('INSERT INTO scores (id, created, updated, user_id, score) '
-            'VALUES (@id, @created, @updated, @userId, @score)');
+            'VALUES (@id, @created, @updated, @user_id, @score)');
 
     final now = DateTime.now().toUtc().toIso8601String();
     final values = {
       'id': nanoid(length: 15),
       'created': now,
       'updated': now,
-      'userId': userId,
+      'user_id': userId,
       'score': score,
     };
 
-    try {
-      await _db.execute(
-        query,
-        parameters: values,
-      );
-      return values;
-    } catch (e) {
-      return {'error': e.toString()};
-    }
+    await _db.execute(
+      query,
+      parameters: values,
+    );
+    return values;
   }
 
   Future<List<Map<String, dynamic>>> read() async {
     final rows = <Map<String, dynamic>>[];
-    try {
-      final result = await _db.execute('SELECT * FROM scores');
-      for (final row in result) {
-        rows.add(row.toColumnMap());
-      }
-    } catch (e) {
-      print('error: $e');
+    final result = await _db.execute('SELECT * FROM scores');
+    for (final row in result) {
+      rows.add(row.toColumnMap());
     }
     return rows;
   }
@@ -65,29 +57,20 @@ class Database {
       'score': score,
     };
 
-    try {
-      await _db.execute(
-        query,
-        parameters: values,
-      );
-      return values;
-    } catch (e) {
-      return {'error': e.toString()};
-    }
+    await _db.execute(
+      query,
+      parameters: values,
+    );
+    return values;
   }
 
-  Future<Map<String, dynamic>> delete(String id) async {
+  Future<void> delete(String id) async {
     final query = Sql.named('DELETE FROM scores '
         'WHERE id = @id');
 
-    try {
-      await _db.execute(
-        query,
-        parameters: {'id': id},
-      );
-      return {'message': 'successfully deleted $id'};
-    } catch (e) {
-      return {'error': e.toString()};
-    }
+    await _db.execute(
+      query,
+      parameters: {'id': id},
+    );
   }
 }

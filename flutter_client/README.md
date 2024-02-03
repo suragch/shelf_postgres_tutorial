@@ -1,16 +1,18 @@
-# flutter_client
+# Flutter client demo for a Shelf Postgres server
 
-A new Flutter project.
+In order for this to work, you need to have a the following things already set up:
 
-## Getting Started
+- A Postgres server running with a correctly configured database.
+- The Shelf server running on localhost port 8080.
 
-This project is a starting point for a Flutter application.
+Follow the directions in the tutorial for help.
 
-A few resources to get you started if this is your first Flutter project:
+## Updating the platform folders
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+If the platform you are running on is not working, try deleting the platform folder and then running `flutter create.` again. However, after doing so, you'll need to make the following platform specific changes:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### macOS
+
+Allow internet permission.
+
+- https://stackoverflow.com/questions/61196860/how-to-enable-flutter-internet-permission-for-macos-desktop-app

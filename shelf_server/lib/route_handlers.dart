@@ -12,20 +12,29 @@ Future<Response> createHandler(Request request) async {
   final userId = map['user_id'];
   final score = map['score'];
 
-  final db = getIt<Database>();
-  final result = await db.create(userId, score);
-  return Response.ok(jsonEncode(result));
+  try {
+    final db = getIt<Database>();
+    final result = await db.create(userId, score);
+    return Response.ok(jsonEncode(result));
+  } catch (e) {
+    print(e);
+    return Response.internalServerError(body: 'Database error');
+  }
 }
 
 Future<Response> readHandler(Request req) async {
-  final db = getIt<Database>();
-  final result = await db.read();
-  return Response.ok(jsonEncode(result, toEncodable: _dateTimeEncoder));
+  try {
+    final db = getIt<Database>();
+    final result = await db.read();
+    return Response.ok(jsonEncode(result, toEncodable: _dateTimeEncoder));
+  } catch (e) {
+    print(e);
+    return Response.internalServerError(body: 'Database error');
+  }
 }
 
 String _dateTimeEncoder(dynamic object) {
   if (object is DateTime) {
-    print(object);
     return object.toUtc().toIso8601String();
   }
   return object;
@@ -37,9 +46,14 @@ Future<Response> updateHandler(Request request) async {
   final id = map['id'];
   final score = map['score'];
 
-  final db = getIt<Database>();
-  final result = await db.update(id, score);
-  return Response.ok(jsonEncode(result, toEncodable: _dateTimeEncoder));
+  try {
+    final db = getIt<Database>();
+    final result = await db.update(id, score);
+    return Response.ok(jsonEncode(result, toEncodable: _dateTimeEncoder));
+  } catch (e) {
+    print(e);
+    return Response.internalServerError(body: 'Database error');
+  }
 }
 
 Future<Response> deleteHandler(Request request) async {
@@ -47,7 +61,13 @@ Future<Response> deleteHandler(Request request) async {
   if (id == null) {
     return Response.badRequest(body: 'id is required');
   }
-  final db = getIt<Database>();
-  final result = await db.delete(id);
-  return Response.ok(jsonEncode(result));
+
+  try {
+    final db = getIt<Database>();
+    await db.delete(id);
+    return Response.ok('deleted');
+  } catch (e) {
+    print(e);
+    return Response.internalServerError(body: 'Database error');
+  }
 }
