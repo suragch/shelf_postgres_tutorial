@@ -2,10 +2,10 @@ import 'package:nanoid2/nanoid2.dart';
 import 'package:postgres/postgres.dart';
 
 class Database {
-  late Connection _connection;
+  late Connection _db;
 
   Future<void> init() async {
-    _connection = await Connection.open(
+    _db = await Connection.open(
       Endpoint(
         host: 'localhost',
         database: 'mydb',
@@ -31,7 +31,7 @@ class Database {
     };
 
     try {
-      await _connection.execute(
+      await _db.execute(
         query,
         parameters: values,
       );
@@ -44,7 +44,7 @@ class Database {
   Future<List<Map<String, dynamic>>> read() async {
     final rows = <Map<String, dynamic>>[];
     try {
-      final result = await _connection.execute(r'SELECT * FROM scores');
+      final result = await _db.execute('SELECT * FROM scores');
       for (final row in result) {
         rows.add(row.toColumnMap());
       }
@@ -56,7 +56,7 @@ class Database {
 
   Future<Map<String, dynamic>> update(String id, int score) async {
     final query = Sql.named('UPDATE scores '
-        'SET score = @score, changed = @changed '
+        'SET score = @score, updated = @updated '
         'WHERE id = @id');
 
     final values = {
@@ -66,7 +66,7 @@ class Database {
     };
 
     try {
-      await _connection.execute(
+      await _db.execute(
         query,
         parameters: values,
       );
@@ -81,7 +81,7 @@ class Database {
         'WHERE id = @id');
 
     try {
-      await _connection.execute(
+      await _db.execute(
         query,
         parameters: {'id': id},
       );

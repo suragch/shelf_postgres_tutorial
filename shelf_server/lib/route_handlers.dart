@@ -25,6 +25,7 @@ Future<Response> readHandler(Request req) async {
 
 String _dateTimeEncoder(dynamic object) {
   if (object is DateTime) {
+    print(object);
     return object.toUtc().toIso8601String();
   }
   return object;
